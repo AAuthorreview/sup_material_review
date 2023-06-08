@@ -1,0 +1,714 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="urn:absolute:jgravier/cities_north_france.owl"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="urn:absolute:jgravier/cities_north_france.owl">
+    <Prefix name="" IRI="urn:absolute:jgravier/cities_north_france.owl"/>
+    <Prefix name="ns" IRI="http://creativecommons.org/ns#"/>
+    <Prefix name="org" IRI="http://www.w3.org/ns/org#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="foaf" IRI="http://xmlns.com/foaf/0.1/"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="skos" IRI="http://www.w3.org/2004/02/skos/core#"/>
+    <Prefix name="time" IRI="http://www.w3.org/2006/time#"/>
+    <Prefix name="vann" IRI="http://purl.org/vocab/vann/"/>
+    <Prefix name="geofla" IRI="http://data.ign.fr/def/geofla#"/>
+    <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:creator"/>
+        <IRI>http://orcid.org/0000-0003-0449-6499</IRI>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:date"/>
+        <Literal xml:lang="en">2023-01-22</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:language"/>
+        <Literal>en</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:language"/>
+        <Literal>fr</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:license"/>
+        <IRI>https://creativecommons.org/licenses/by/4.0</IRI>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:title"/>
+        <Literal xml:lang="fr">Ontologie de l&apos;accessibilité infra-urbaine des villes du nord de la France au début du XIXe s.</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:title"/>
+        <Literal xml:lang="en">Ontology of infra-urban accessibility of northern French cities in the early 19th century.</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="owl:versionInfo"/>
+        <Literal xml:lang="en">Version 1.0.0</Literal>
+    </Annotation>
+    <Declaration>
+        <Class IRI="http://rdf.insee.fr/def/geo#Commune"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://rdf.insee.fr/def/geo#Departement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.opengis.net/ont/sf#Line"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.opengis.net/ont/sf#MultiPolygon"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.opengis.net/ont/sf#Point"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#AutreSource"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Centre"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Pole"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Troncon"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Ville"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#cartesETMJ"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#multipolygone"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#point"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#polyligne"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.geonames.org/ontology#featureCode"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#aPourGeom"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#estAccess"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#estIdentifieSur"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#estIncluDans"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#estInfereAPartirDe"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#estLie"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#estReconstitueAvec"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#estTresDense"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#estUrbaniseContinu"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="geofla:coordX"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="geofla:coordY"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="geofla:numInsee"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="geofla:superficieHa"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#insee"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#longueur"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.geonames.org/ontology#R.RD"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.geonames.org/ontology#R.RDJCT"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.geonames.org/ontology#S.CH"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.geonames.org/ontology#S.CSTL"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.geonames.org/ontology#S.HSTS"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:creator"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:date"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:language"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:license"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:title"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="http://www.opengis.net/ont/sf#Line"/>
+        <Class IRI="#polyligne"/>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="http://www.opengis.net/ont/sf#MultiPolygon"/>
+        <Class IRI="#multipolygone"/>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="http://www.opengis.net/ont/sf#Point"/>
+        <Class IRI="#point"/>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Centre"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#aPourGeom"/>
+            <Class IRI="#multipolygone"/>
+        </ObjectMinCardinality>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Pole"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#aPourGeom"/>
+            <Class IRI="#point"/>
+        </ObjectMinCardinality>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Troncon"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#aPourGeom"/>
+            <Class IRI="#polyligne"/>
+        </ObjectMinCardinality>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Ville"/>
+        <ObjectMinCardinality cardinality="2">
+            <ObjectProperty IRI="#aPourGeom"/>
+            <Class IRI="#multipolygone"/>
+        </ObjectMinCardinality>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="http://rdf.insee.fr/def/geo#Commune"/>
+        <Class IRI="http://rdf.insee.fr/def/geo#Departement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Centre"/>
+        <Class IRI="#Ville"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Pole"/>
+        <Class IRI="http://rdf.insee.fr/def/geo#Commune"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Pole"/>
+        <ObjectHasValue>
+            <ObjectProperty IRI="http://www.geonames.org/ontology#featureCode"/>
+            <NamedIndividual IRI="http://www.geonames.org/ontology#S.CH"/>
+        </ObjectHasValue>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Pole"/>
+        <ObjectHasValue>
+            <ObjectProperty IRI="http://www.geonames.org/ontology#featureCode"/>
+            <NamedIndividual IRI="http://www.geonames.org/ontology#S.CSTL"/>
+        </ObjectHasValue>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Pole"/>
+        <ObjectHasValue>
+            <ObjectProperty IRI="http://www.geonames.org/ontology#featureCode"/>
+            <NamedIndividual IRI="http://www.geonames.org/ontology#S.HSTS"/>
+        </ObjectHasValue>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Troncon"/>
+        <ObjectHasValue>
+            <ObjectProperty IRI="http://www.geonames.org/ontology#featureCode"/>
+            <NamedIndividual IRI="http://www.geonames.org/ontology#R.RD"/>
+        </ObjectHasValue>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Troncon"/>
+        <ObjectHasValue>
+            <ObjectProperty IRI="http://www.geonames.org/ontology#featureCode"/>
+            <NamedIndividual IRI="http://www.geonames.org/ontology#R.RDJCT"/>
+        </ObjectHasValue>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Ville"/>
+        <Class IRI="http://rdf.insee.fr/def/geo#Departement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Ville"/>
+        <ObjectHasValue>
+            <ObjectProperty IRI="http://www.geonames.org/ontology#featureCode"/>
+            <NamedIndividual IRI="http://www.geonames.org/ontology#S.HSTS"/>
+        </ObjectHasValue>
+    </SubClassOf>
+    <DataPropertyAssertion>
+        <DataProperty abbreviatedIRI="geofla:numInsee"/>
+        <AnonymousIndividual nodeID="_:genid2147483653"/>
+        <Literal xml:lang="fr">contient le numéro insee de la commune centrale de la ville</Literal>
+    </DataPropertyAssertion>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#estAccess"/>
+        <Class IRI="#Troncon"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#estIdentifieSur"/>
+        <Class IRI="#Troncon"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#estIncluDans"/>
+        <Class IRI="#Pole"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#estInfereAPartirDe"/>
+        <Class IRI="#Centre"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#estLie"/>
+        <Class IRI="#Ville"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#estReconstitueAvec"/>
+        <Class IRI="#Pole"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#estTresDense"/>
+        <Class IRI="#Centre"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#estUrbaniseContinu"/>
+        <Class IRI="#Centre"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#estAccess"/>
+        <Class IRI="#Centre"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#estAccess"/>
+        <Class IRI="#Pole"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#estIdentifieSur"/>
+        <Class IRI="#cartesETMJ"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#estIncluDans"/>
+        <Class IRI="#Centre"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#estInfereAPartirDe"/>
+        <Class IRI="#cartesETMJ"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#estLie"/>
+        <Class IRI="http://rdf.insee.fr/def/geo#Commune"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#estReconstitueAvec"/>
+        <Class IRI="#AutreSource"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#estTresDense"/>
+        <Class IRI="#Ville"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#estUrbaniseContinu"/>
+        <Class IRI="#Ville"/>
+    </ObjectPropertyRange>
+    <EquivalentDataProperties>
+        <DataProperty abbreviatedIRI="geofla:numInsee"/>
+        <DataProperty IRI="#insee"/>
+    </EquivalentDataProperties>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="geofla:coordX"/>
+        <Class IRI="#point"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="geofla:coordY"/>
+        <Class IRI="#point"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="geofla:superficieHa"/>
+        <Class IRI="#Centre"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#insee"/>
+        <Class IRI="http://rdf.insee.fr/def/geo#Commune"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#longueur"/>
+        <Class IRI="#Troncon"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="geofla:coordX"/>
+        <Datatype abbreviatedIRI="xsd:double"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="geofla:coordY"/>
+        <Datatype abbreviatedIRI="xsd:double"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="geofla:superficieHa"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#longueur"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>geofla:superficieHa</AbbreviatedIRI>
+        <Literal xml:lang="en">area in ha</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>http://rdf.insee.fr/def/geo#Commune</IRI>
+        <IRI>https://rdf.insee.fr/geo/index.html</IRI>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://rdf.insee.fr/def/geo#Commune</IRI>
+        <Literal xml:lang="fr">Commune</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://rdf.insee.fr/def/geo#Commune</IRI>
+        <Literal xml:lang="en">Municipality</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>http://rdf.insee.fr/def/geo#Departement</IRI>
+        <IRI>https://rdf.insee.fr/geo/index.html</IRI>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://rdf.insee.fr/def/geo#Departement</IRI>
+        <Literal xml:lang="fr">Departement</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://rdf.insee.fr/def/geo#Departement</IRI>
+        <Literal xml:lang="en">Department</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>http://www.opengis.net/ont/sf#Line</IRI>
+        <IRI>http://www.opengis.net/ont/sf</IRI>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>http://www.opengis.net/ont/sf#Line</IRI>
+        <Literal xml:lang="en">Track graph</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>http://www.opengis.net/ont/sf#MultiPolygon</IRI>
+        <IRI>http://www.opengis.net/ont/sf</IRI>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <IRI>http://www.opengis.net/ont/sf#Point</IRI>
+        <IRI>http://www.opengis.net/ont/sf</IRI>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#AutreSource</IRI>
+        <Literal xml:lang="fr">Autres sources d&apos;information : OSM, Google Map Satellite, cadastres napoléoniens (plans), livres d&apos;histoire locale, etc. Pour chaque ville, des spécifications nécessitant des clarifications sont données avec la bibliographie</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#AutreSource</IRI>
+        <Literal xml:lang="en">Other sources of information: OSM, Google Map Satellite, Napoléonian cadastres (maps), local history books, etc. For each city, specifications requiring clarification are given with the bibliography</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#AutreSource</IRI>
+        <Literal xml:lang="fr">autres sources</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#AutreSource</IRI>
+        <Literal xml:lang="en">other sources</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Centre</IRI>
+        <Literal xml:lang="en">Delimited area of the urban space</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Centre</IRI>
+        <Literal xml:lang="fr">Zone délimitée de l&apos;espace urbain</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Centre</IRI>
+        <Literal xml:lang="en">Urban area</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Centre</IRI>
+        <Literal xml:lang="fr">Zone urbaine</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Pole</IRI>
+        <Literal xml:lang="en">Historical institutional pole materialized by an establishment in the urban space</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Pole</IRI>
+        <Literal xml:lang="fr">Pôle institutionnel historique matérialisé par un établissement dans l&apos;espace urbain</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Pole</IRI>
+        <Literal xml:lang="en">Historical urban center</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Pole</IRI>
+        <Literal xml:lang="fr">Pôle urbain historique</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Troncon</IRI>
+        <Literal xml:lang="en">A section of road, street, or path as depicted on état-major maps that provides access to infra-urban spaces and the city with other settlements. Rivers which are navigable are not considered.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Troncon</IRI>
+        <Literal xml:lang="fr">Tronçon de route, de rue ou de chemin représenté sur les cartes d&apos;état-major permettant l&apos;accessibilité des espaces infra-urbains et de la ville avec d&apos;autres peuplements. Ne sont pas considérés les rivières navigables.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Troncon</IRI>
+        <Literal xml:lang="en">Section</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Troncon</IRI>
+        <Literal xml:lang="fr">Tronçon</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Ville</IRI>
+        <Literal xml:lang="en">&quot;Ville&quot; or &quot;Bourg&quot; according to the typography used on état-major maps to designate these settlements</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Ville</IRI>
+        <Literal xml:lang="fr">&quot;Ville&quot; ou &quot;Bourg&quot; d&apos;après les casses typographiques utilisées sur les cartes d&apos;état-major pour désigner ces peuplements</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Ville</IRI>
+        <Literal xml:lang="en">City</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Ville</IRI>
+        <Literal xml:lang="fr">Ville</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#aPourGeom</IRI>
+        <Literal xml:lang="fr">a pour géométrie</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#aPourGeom</IRI>
+        <Literal xml:lang="en">has geometry</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#cartesETMJ</IRI>
+        <Literal xml:lang="fr">IGN SCAN État-major® : cartes d’état-major au 1:40 000 sur la France métropolitaine</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#cartesETMJ</IRI>
+        <Literal xml:lang="en">IGN SCAN État-major®: 1:40,000-scale état-major maps of French territory</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#cartesETMJ</IRI>
+        <Literal xml:lang="fr">cartes d&apos;état-major</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#cartesETMJ</IRI>
+        <Literal xml:lang="en">état-major maps</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estAccess</IRI>
+        <Literal xml:lang="en">allows access</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estAccess</IRI>
+        <Literal xml:lang="fr">permet l&apos;accès</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estIdentifieSur</IRI>
+        <Literal xml:lang="fr">est identifié sur</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estIdentifieSur</IRI>
+        <Literal xml:lang="en">is identified on</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estIncluDans</IRI>
+        <Literal xml:lang="fr">est inclu dans</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estIncluDans</IRI>
+        <Literal xml:lang="en">is included in</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estInfereAPartirDe</IRI>
+        <Literal xml:lang="fr">est inféré à partir de</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estInfereAPartirDe</IRI>
+        <Literal xml:lang="en">is inferred from</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estLie</IRI>
+        <Literal xml:lang="fr">est lié à</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estLie</IRI>
+        <Literal xml:lang="en">is linked to</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estReconstitueAvec</IRI>
+        <Literal xml:lang="fr">est reconstitué à partir de</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estReconstitueAvec</IRI>
+        <Literal xml:lang="en">is reconstituted from</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#estTresDense</IRI>
+        <Literal xml:lang="fr">Espace urbain délimité par l’enceinte urbaine – quand elle est encore en élévation au moment des levés de l’état-major – ou l’espace anciennement délimité par l’enceinte urbaine. Renvoie généralement aux zones représentées sous forme d’aplats rouges sur les planches de cartes de l’état-major, relatifs à des îlots denses.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#estTresDense</IRI>
+        <Literal xml:lang="en">Urban space delimited by the urban enclosure – when it is still in elevation – or the space formerly delimited by the urban enclosure. Generally refers to the areas represented in the form of solid red blocks on the maps, relating to dense blocks</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estTresDense</IRI>
+        <Literal xml:lang="en">dense city center</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estTresDense</IRI>
+        <Literal xml:lang="fr">ville-centre dense</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#estUrbaniseContinu</IRI>
+        <Literal xml:lang="fr">Morphologie de l&apos;espace urbain contenant la ville-centre et tissu d&apos;habitats continus sans interuptions (limite d&apos;environ 100 mètres)</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#estUrbaniseContinu</IRI>
+        <Literal xml:lang="en">Morphology of the urban space containing the city-centre and continuous habitats without interruptions (limit ~ 100 meters)</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estUrbaniseContinu</IRI>
+        <Literal xml:lang="fr">tissu urbain continu</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#estUrbaniseContinu</IRI>
+        <Literal xml:lang="en">urban agglomeration</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#longueur</IRI>
+        <Literal xml:lang="en">length</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#multipolygone</IRI>
+        <Literal xml:lang="en">Multipolygon</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#multipolygone</IRI>
+        <Literal xml:lang="fr">Multipolygone</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#point</IRI>
+        <Literal xml:lang="en">Point</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#point</IRI>
+        <Literal xml:lang="fr">Point</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#polyligne</IRI>
+        <Literal xml:lang="fr">Ligne</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#polyligne</IRI>
+        <Literal xml:lang="en">Line</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

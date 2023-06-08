@@ -1,0 +1,636 @@
+---
+title: "Supplementary material of XXXXXXXXXXX"
+format: html
+author: Anonymous
+date: 2023-05-17
+date-modified: 2023-06-08
+---
+## Project overview
+
+Libraries:
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+library(sf)
+library(spatstat)
+library(data.table)
+library(maptools)
+library(ggpmisc)
+library(ggspatial)
+library(ggthemes)
+library(readxl)
+if (!require("spacetimeLPP")) remotes::install_github(repo = "soduco/space_time_lpp")
+library(parallel)
+library(doParallel)
+```
+
+Session information:
+```{r}
+sessionInfo()
+```
+
+Data reading:
+```{r warning=FALSE, message=FALSE}
+## network
+network_data <- read_sf("data/dynarep/dynarep-les-voies-dapres-la-carte-detat-major-au-1-320e-1854revu_topology.shp") %>%
+  st_transform(x = ., crs = 2154) %>%
+  st_cast(x = ., to = "LINESTRING")
+## cities
+etmj_cities_north_france <- readxl::read_excel(path = "data/paper/Data_EtmjPop_V2.xls", sheet = "Donnees")
+## communes from dynarep
+communes_dynarep <- read_sf("data/dynarep//dynarep-les-communes-dapres-la-carte-detat-major-au-1-320e-1854.shp") %>%
+  st_transform(x = ., crs = 2154)
+## spatial data: areas of 14 specific cities
+surfaces <- read_sf(dsn = "data/paper/historical_urban_centers.gpkg")
+## European coastline: only for basemap
+coastline <- read_sf(dsn = "data/Europe_coastline_shapefile/Europe_coastline_poly.shp") %>%
+  st_transform(crs = 2154)
+```
+
+
+## 1. Selection of cities studied at the intra-urban level
+
+#### 1.1 Road network in 1854
+
+The road network data were compiled from the 1:320,000 scale Etat-Major maps. It results from the research project *Dynamics and Resilience of Traffic Networks in the Bassin parisien* (Dynarep) led by Laurent Costa and Sandrine Robert. These data are open under ODbL license since 2021 (see data/dynarep/README.md for more information). Collaborative vectorization in the project has resulted in, among other things:
+
+- linear geographic data related to roads (called *ways* in Dynarep) ;
+- point geographical data of the municipalities.
+
+The compilation of the various data blocks after collaborative editing involves some topology issues. The network data provided in the data/dynarep folder have thus been (very) slightly revised by hand in order to establish exhaustive planar network measures for the study area.
+
+#### 1.2 System of proximity cities: cluster calculations
+
+Data snapping and global visualization:
+```{r warning=FALSE, message=FALSE}
+## linking Dynarep points municipalities data and cities
+# some municipalities were merged since 1854 so grouping and creating geometric center
+# could give results a little displaced (ex: Amiens)
+towns_data_points <- communes_dynarep %>%
+  left_join(etmj_cities_north_france, by = c('insee_com'='INSEE')) %>%
+  filter(!is.na(POP1836)) %>%
+  group_by(insee_com, nom_comm, TYPE_LIEU) %>%
+  summarise() %>%
+  st_centroid()
+
+## snaping data points (cities) to lines (network)
+snaping_data <- snapPointsToLines(points = as(object = towns_data_points, Class = "Spatial"),
+                                  lines = as(network_data, "Spatial"), maxDist = 5000)
+snaping_data <- snaping_data %>%
+  st_as_sf(crs=2154) %>%
+  bind_cols(towns_data_points %>% st_drop_geometry() %>% select(nom_comm, insee_com))
+
+## visualization
+plot(network_data$geometry)
+plot(snaping_data$geometry, col='red', pch=24, cex=0.75, add=TRUE)
+```
+
+Different clusters established from network distance calculations between cities:
+```{r warning=FALSE, message=FALSE}
+## distances cut from 30km to 80km every 5km
+liste_distances <- seq(30000, 80000, 5000)
+## calculs
+liste_sf <- list()
+for (i in 1:length(liste_distances)) {
+  liste_sf[[i]] <- spacetimeLPP::dist_clustering(pp = snaping_data, 
+                                   network = network_data, 
+                                   distparam = liste_distances[i]) %>%
+    mutate(dist_choice = liste_distances[i])
+}
+liste_sf <- data.table::rbindlist(l = liste_sf) %>%
+  st_as_sf(crs = 2154)
+```
+
+Data creation for better map visualization of the clusters:
+```{r warning=FALSE, message=FALSE}
+## bbox creation for network and coastline croping
+bbox <- st_bbox(obj = snaping_data) %>%
+  st_as_sfc() %>%
+  st_as_sf(crs = 2154) %>%
+  st_buffer(x = ., dist = 20000)
+croping_network <- st_crop(x = network_data, y = bbox)
+croping_coastline <- st_crop(x = coastline, y = bbox)
+
+## convex hull creation for better visualisation of clusters
+hull_visu <- liste_sf %>%
+  mutate(dist_choice=paste0(dist_choice/1000, ' km')) %>%
+  group_by(dist_choice, cluster) %>%
+  summarise() %>%
+  st_convex_hull(x = .)
+
+## adding a new panel as reference of cities surveyed
+villes <- surfaces %>%
+  st_drop_geometry() %>%
+  select(INSEE) %>%
+  mutate(dist_choice = 'Villes étudiées (en couleur)') %>%
+  unique()
+villes <- towns_data_points %>%
+  left_join(x = ., y = villes, by = c('insee_com'='INSEE')) %>%
+  mutate(cluster = as.factor(if_else(dist_choice == 'Villes étudiées (en couleur)', 1, NA))) %>%
+  mutate(dist_choice = 'Villes étudiées (en couleur)') %>%
+  select(-insee_com)
+
+liste_sf_visu <- liste_sf %>%
+  mutate(dist_choice=paste0(dist_choice/1000, ' km')) %>%
+  bind_rows(villes)
+```
+
+Mapping:
+```{r}
+ggplot() +
+  geom_sf(data = croping_coastline, color = 'grey65', fill = 'white', linewidth=0.2) +
+  geom_sf(data = croping_network, color = 'grey80', linewidth=0.2) +
+  geom_sf(data = hull_visu, aes(color=as.character(cluster), fill=as.character(cluster)), show.legend = FALSE, alpha=0.1) +
+  geom_sf(data = liste_sf_visu, aes(color=as.character(cluster)), show.legend = FALSE, size=0.5) +
+  theme_bw() +
+  theme(axis.text = element_blank(), axis.ticks = element_blank(), text = element_text(size = 7),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  facet_wrap(~dist_choice, nrow = 3) +
+  labs(caption = "Données: FNP 2021 d'après DYNAREP 2020, L. Costa, S. Robert (réseau État-major 1854),
+  XXXX 2016, repris 2018 (peuplement)
+       Clusters: différents seuils de découpe du dendrogramme issu de la CAH calculée sur la matrice de distance réseau entre les villes étudiées
+       Les enveloppes convexes sont uniquement calculées pour une meilleure visualisation des clusters")
+
+# output
+ggsave(filename = 'outputs/figure_4_cluster_distance_matrix.png', width = 18, height = 16, units = 'cm', dpi = 600)
+```
+
+#### 1.3 Rotios between dendrograms distances and distances in clusters
+
+_WARNING: the choice of the number of cores for paralleled calculations_
+
+Calculation of distances between cities in diverse clusters:
+```{r warning=FALSE, message=FALSE}
+## calculating pair distances and summarized results as function
+f_pair_dist_cluster <- function(input_tibble) {
+  lpp_object <- lpp(X = as.ppp(X = as(object = input_tibble, Class = 'Spatial')), 
+                    L = as.linnet(as(object = croping_network, Class = 'Spatial')))
+  pair_dist_matrix <- pairdist.lpp(X = lpp_object)
+  pair_dist_matrix <- pair_dist_matrix[lower.tri(x = pair_dist_matrix)]
+  result <- tibble(meandist = mean(pair_dist_matrix), median = median(pair_dist_matrix),
+                               dist_choice = input_tibble$dist_choice[1],
+                               cluster = input_tibble$cluster[1])
+  return(result)
+}
+
+# data split: list of every cluster for every distance HCA
+liste_sf_clusters <- liste_sf %>%
+  group_by(dist_choice, cluster) %>%
+  group_split()
+
+# parallel calculations of pair (towns) distances in clusters
+nb_core <- 12
+clustersdo <- parallel::makeCluster(nb_core)
+doParallel::registerDoParallel(clustersdo)
+
+liste_summary_dist <- list()
+liste_summary_dist <- mclapply(X = liste_sf_clusters, FUN = f_pair_dist_cluster)
+
+stopCluster(clustersdo)
+
+summary_dist_clusters <- rbindlist(l = liste_summary_dist) %>%
+  as_tibble()
+```
+
+Output table:
+```{r}
+# output tibble visualization
+print(x = summary_dist_clusters, n = 20)
+# file export
+write.csv(x = summary_dist_clusters, file = "outputs/summary_dist_clusters.csv", row.names = FALSE)
+```
+
+Synthesis table:
+```{r}
+summary_dist_clusters %>% 
+  group_by(dist_choice) %>% 
+  summarise(meandist = mean(meandist, na.rm = TRUE)) %>% 
+  mutate(ratio1 = dist_choice/meandist, ratio2 = meandist/dist_choice) %>%
+  print()
+```
+
+
+## 2. Corpus presentation
+
+General map of cities studied:
+```{r}
+ggplot() +
+  geom_sf(data = croping_coastline, color = 'grey65', fill = 'white', linewidth=0.2) +
+  geom_sf(data = croping_network, color = 'grey80', linewidth=0.2) +
+  geom_sf(data = towns_data_points %>% rename(Type = TYPE_LIEU), 
+          aes(color=Type), show.legend = TRUE) +
+  scale_color_tableau(palette = "Tableau 10") +
+  theme_bw() +
+  theme(axis.text = element_blank(), axis.ticks = element_blank(), text = element_text(size = 7),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        legend.position = 'top', legend.box.spacing = unit(x = 0, units = 'in')) +
+  annotation_scale(location = "tr", width_hint = 0.2, 
+                   pad_y = unit(0.3, "in"), pad_x = unit(0.2, 'in')) +
+  labs(caption = "Données: FNP 2021 d'après DYNAREP 2020, L. Costa, S. Robert (réseau État-major 1854),
+  XXXX 2016, repris 2018 (peuplement)")
+
+# output
+ggsave(filename = 'outputs/figure_2_map_138_cities.png', width = 16, height = 14, units = 'cm', dpi = 600)
+
+```
+
+
+## 3. Relationship between population size and areas of all cities
+
+### 3.1 Overview of relationships
+Function for linear regression and summarized data:
+```{r}
+# linear regression on transform log10 data and summarizing
+f_relationship <- function(input_tibble){
+  formula_log10 <- lm(log10(x = input_tibble$area) ~ log10(x = input_tibble$pop))
+  summary_data <- summary(formula_log10)
+  output_tibble <- tibble(
+    y = paste0(round(summary_data$coefficients[1], 3), ' + ', round(summary_data$coefficients[2], 3), 'x'),
+    beta = round(summary_data$coefficients[2], 3), beta_stderror = round(summary_data$coefficients[4], 3),
+    r2 = round(summary_data$r.squared, 3), residuals_stderror_sigma = round(summary_data$sigma, 3),
+    year_pop = input_tibble$year_pop[1], system_type = input_tibble$system[1],
+    N = nrow(input_tibble))
+  return(output_tibble)
+  }
+```
+
+Applying on data:
+```{r}
+# applying analysis on diverse delineation of systems and multiple dates
+etmj_cities_long <- etmj_cities_north_france %>%
+  pivot_longer(cols = POP1821:POP1866, names_to = "year_pop", values_to = "pop") %>%
+  mutate(system = 'complet') %>%
+  bind_rows(
+    etmj_cities_north_france %>%
+      pivot_longer(cols = POP1821:POP1866, names_to = "year_pop", values_to = "pop") %>%
+      filter(NOM_COMM != 'PARIS') %>%
+      mutate(system = 'complet sans Paris')
+  ) %>%
+  bind_rows(
+    etmj_cities_north_france %>%
+      pivot_longer(cols = POP1821:POP1866, names_to = "year_pop", values_to = "pop") %>%
+      filter(NOM_COMM != 'PARIS') %>%
+      filter(TYPE_LIEU == 'Ville') %>%
+      mutate(system = 'villes sans Paris')
+  ) %>%
+  bind_rows(
+    etmj_cities_north_france %>%
+      pivot_longer(cols = POP1821:POP1866, names_to = "year_pop", values_to = "pop") %>%
+      filter(TYPE_LIEU != 'Ville') %>%
+      mutate(system = 'bourgs')
+  ) %>%
+  rename(area = AREA)
+
+etmj_cities_long_l <- etmj_cities_long %>%
+  group_by(year_pop, system) %>%
+  group_split()
+
+# data analysis
+reg_outputs <- lapply(X = etmj_cities_long_l, FUN = f_relationship)
+```
+
+Output table:
+```{r}
+# output tibble visu
+reg_outputs <- rbindlist(l = reg_outputs) %>%
+  as_tibble() %>%
+  arrange(system_type)
+print(x = reg_outputs, n = nrow(reg_outputs))
+# file export
+write.csv(x = reg_outputs, file = "outputs/summary_reg_outputs.csv", row.names = FALSE)
+```
+
+Visualization of complete data set and without Paris in 1836:
+```{r}
+etmj_cities_long %>%
+  filter(system %in% c('complet sans Paris', 'complet')) %>%
+  filter(year_pop == 'POP1836') %>%
+  rename(Type = TYPE_LIEU) %>%
+  ggplot(aes(x = pop, y = area)) +
+  scale_x_continuous(trans = 'log10', name = 'log10(population)') +
+  scale_y_continuous(trans = 'log10', name = 'log10(surface) - en ha') +
+  ggpmisc::stat_poly_line(color = "grey70", linewidth = 0.2) +
+  ggpmisc::stat_poly_eq(aes(label = paste(after_stat(eq.label),
+                                          after_stat(rr.label), sep = "*\", \"*")),
+                        size = 2, label.x = "right") +
+  geom_point(aes(color = Type), size = 0.6) +
+  ggthemes::scale_color_tableau(palette = "Tableau 10") +
+  facet_wrap(~system, scales = 'free') +
+  theme_bw() +
+  theme(axis.title = element_text(size = 8), axis.text = element_text(size = 6)) +
+  labs(caption = "Données:  XXXX 2016, repris 2018", subtitle = '1836')
+
+ggsave(filename = "outputs/figure_7_pop_area_1836.png", dpi = 600, width = 16, height = 13, units = "cm")
+```
+
+
+Global evolution of population
+```{r}
+etmj_cities_long %>%
+  filter(system %in% c('complet', 'complet sans Paris')) %>%
+  group_by(system, year_pop) %>%
+  summarise(N = sum(pop)) %>%
+  print()
+```
+
+
+### 3.2 Analysis of residuals
+
+Calculus for all cities without Paris in 1836:
+```{r}
+tibble_for_residuals <- etmj_cities_long %>%
+  filter(system == 'complet sans Paris' & year_pop == 'POP1836')
+tibble_residuals <- lm(log10(x = tibble_for_residuals$area) ~ log10(x = tibble_for_residuals$pop))
+tibble_residuals <- summary(tibble_residuals)
+
+residuals <- tibble_for_residuals %>%
+  bind_cols(tibble(tibble_residuals$residuals)) %>%
+  rename(residus = `tibble_residuals$residuals`) %>%
+  mutate(neg_pos = if_else(residus < 0, 'Plus dense', 'Moins dense'))
+
+write.csv(x = residuals, file = "outputs/residuals.csv", row.names = FALSE)
+
+residuals_sf <- towns_data_points %>% 
+  select(insee_com) %>% 
+  left_join(y = residuals, by = c('insee_com'='INSEE'))
+```
+
+Visualization:
+```{r}
+ggplot() +
+    geom_sf(data = croping_coastline, color = 'grey65', fill = 'white', linewidth=0.2) +
+    geom_sf(data = croping_network, color = 'grey80', linewidth=0.1) +
+    geom_sf(data = residuals_sf, fill = 'grey50', size=0.5, shape=12) +
+    geom_sf(data = residuals_sf %>% 
+              rename(population = pop) %>%
+              filter(residus > 0.198 | residus < -0.198), # more or less than residuals SE
+            aes(color=residus, size = population), show.legend = TRUE) +
+    scale_color_gradient2_tableau() +
+    scale_size_area() +
+    theme_bw() +
+    theme(axis.text = element_blank(), axis.ticks = element_blank(), text = element_text(size = 7),
+          panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          legend.position = 'right', legend.box.spacing = unit(x = 0, units = 'in')) +
+    annotation_scale(location = "tr", width_hint = 0.2, 
+                     pad_y = unit(0.3, "in"), pad_x = unit(0.2, 'in')) +
+  labs(caption = "Données: FNP 2021 d'après DYNAREP 2020, L. Costa, S. Robert (réseau État-major 1854),
+  XXXX 2016, repris 2018 (peuplement)",
+  subtitle = "Écart au modèle du système complet sans Paris: résidus plus forts que l'erreur standard (0.198)")
+
+# output
+ggsave(filename = 'outputs/figure_8_map_residuals_cities.png', width = 16, height = 14, units = 'cm', dpi = 600)
+```
+
+## 4. Accessibility models
+
+Seed for reproducibility:
+```{r}
+set.seed(2123)
+```
+
+Reading data:
+```{r}
+surfaces <- read_sf(dsn = "data/paper/urban_areas.gpkg") %>%
+  mutate(morphology_type = if_else(morphology_type == "ville-centre dense (aplats rouge ETMJ sans éléments défensifs)", "ville-centre dense", "tissu urbain continu"))
+routes <- read_sf(dsn = "data/paper/network_sections.gpkg")
+centers <- read_sf(dsn = "data/paper/historical_urban_centers.gpkg")
+
+villes <- unique(surfaces$INSEE)
+```
+
+Adding RSS points on linear network for better spatial resolution in models and calculating cross distance matrix from centers to all points (old and new ones) on network:
+```{r, warning=FALSE}
+distancefinal <- tibble(rowid = numeric(), V1 = numeric(), V2 = numeric(), geometry = st_sfc(), 
+                        name = character(), fortifications = character()) %>%
+  st_as_sf(crs=2154) 
+
+for (i in 1:length(x = villes)) {
+  geom_selection <- routes %>% filter(INSEE == villes[i])
+  network <- as.linnet(X = as(object = geom_selection %>% 
+                                select(geom), 
+                              Class = "Spatial"))
+  
+  # theoretically: a point ~ every 50 meters
+  npoints <- as.numeric(round(x = sum(st_length(x = geom_selection$geom))/50, digits = 0))
+  pointsrandom <- runiflpp(n = npoints, L = network, nsim = 1)
+  
+  pointsrandomxy_roads <- tibble(x = pointsrandom$data$x, y = pointsrandom$data$y) %>%
+    st_as_sf(x = ., coords = c("x", "y"), crs = 2154)
+  
+  # xy of network lines init and random points on network
+  xy_roads <- tibble(x = network$vertices$x, y = network$vertices$y) %>%
+    st_as_sf(x = ., coords = c("x", "y"), crs = 2154) %>%
+    bind_rows(pointsrandomxy_roads) # adding random points
+  xy_roadslpp <- lpp(X = as.ppp(X = as(object = xy_roads, Class = "Spatial")), 
+                     L = network)
+  lppcenters <- lpp(X = as.ppp(X = as(object = centers %>% filter(INSEE == villes[i]), Class = "Spatial")),
+                    L = network)
+  
+  # cross distances between centers and points on network
+  distances <- crossdist.lpp(X = xy_roadslpp, Y = lppcenters)
+  
+  # new tibble
+  titre <- geom_selection$name_INSEE[1]
+  fortif <- surfaces %>% filter(INSEE == villes[i])
+  fortif <- fortif$main_fortifications[1]
+  
+  distances <- distances %>%
+    as_tibble() %>%
+    rowid_to_column() %>%
+    bind_cols(xy_roads) %>%
+    mutate(name = titre) %>%
+    mutate(fortifications = fortif) %>%
+    st_as_sf()
+  
+  distancefinal <- distancefinal %>%
+    bind_rows(distances)
+  
+}
+```
+
+### 4.1 Accessibility from different centers on network
+
+Creation of a new sf based on cross distances with filtering the points contained in diverse type of urban areas:
+```{r}
+point_in <- distancefinal %>%
+  st_join(y = surfaces %>%
+            rowid_to_column() %>%
+            filter(rowid != 2) %>%
+            select(-rowid) %>%
+            mutate(estdans = "oui"), 
+          join = st_within) %>%
+  mutate(fortifications = paste0("fortifications : ", fortifications))
+```
+
+Visualization of accessibility results:
+```{r}
+point_in %>%
+  filter(estdans == "oui") %>%
+  pivot_longer(cols = V1:V2, names_to = "type_center", values_to = "dist") %>%
+  mutate(Type = if_else(condition = type_center == "V1", true = "Ancien pôle", false = "Hôtel de ville")) %>%
+  st_drop_geometry() %>%
+  ggplot(mapping = aes(x = dist, linetype = Type)) +
+  geom_density() +
+  theme_bw() +
+  theme(axis.text = element_text(size = 8)) +
+  xlab("Distance en m.") +
+  ylab("KDE") +
+  labs(caption = "Données : XXXX 2023") +
+  facet_grid(fortifications~morphology_type, scales = 'free')
+
+# output
+ggsave(filename = 'outputs/figure_10_accessibility.png', width = 16, height = 14, units = 'cm', dpi = 400)
+```
+
+
+### 4.2 Accessibility from City Hall to urban margins
+
+Model parameters: speed and duration
+```{r}
+speed <- seq(3, 5, 0.2)
+duration <- seq(5, 60, 5)
+```
+
+Creation of spatial object containing feature points accessible from City Hall considering speed and duration parameters:
+```{r}
+tableaufinal <- tibble(rowid = numeric(), center = character(), name = character(), geometry = st_sfc(),
+                       duree = numeric(), speed = numeric()) %>%
+  st_as_sf(crs=2154)
+
+for (d in 1:length(duration)) {
+  
+  tableauvitesse <- tibble(rowid = numeric(), center = character(), name = character(), geometry = st_sfc(),
+                           duree = numeric(), speed = numeric())  %>%
+    st_as_sf(crs=2154)
+  
+  distancefinal <- distancefinal %>%
+    select(-rowid) %>%
+    rowid_to_column()
+  
+  for (v in 1:length(speed)) {
+    disttemps <- (speed[v]*1000)/60*duration[d]  
+    tableau <- distancefinal %>%
+      select(rowid, geometry) %>%
+      left_join(
+        distancefinal %>%
+          st_drop_geometry() %>%
+          filter(V2 <= disttemps) %>% # V2 is city hall, V1 is old center
+          mutate(center = "Hôtel de ville") %>%
+          select(rowid, center, name), by = "rowid"
+      ) %>%
+      filter(!is.na(center)) %>%
+      mutate(duree = duration[d],
+             speed = speed[v])
+    
+    tableauvitesse <- tableauvitesse %>%
+      bind_rows(tableau)
+  }
+  
+  tableaufinal <- tableaufinal %>%
+    bind_rows(tableauvitesse)
+  
+}
+```
+
+Calculating convex hull of points grouping by speed/duration parameters:
+```{r, echo=FALSE}
+sffinalconvexhull <- tableaufinal %>%
+  st_as_sf(crs=2154) %>%
+  group_by(duree, name, speed, center) %>%
+  summarise() %>%
+  st_convex_hull()
+```
+
+Intersecting new polygons and spatial polygons of cities:
+```{r, warning=FALSE}
+finalintersections <- tibble(duree = numeric(), speed = numeric(), name = character(),
+                             morphology_type = character(), size_percent = numeric())
+
+for (i in 1:length(x = villes)) {
+  
+  intersections <- st_intersection(x = sffinalconvexhull, y = surfaces %>% 
+                                     filter(INSEE == villes[i]) %>%
+                                     mutate(area = st_area(x = .)/10000))
+  
+  intersections <- intersections %>%
+    mutate(area_intersection = st_area(x = .)/10000) %>%
+    st_drop_geometry() %>%
+    mutate(size_percent = as.numeric(area_intersection/area)) %>%
+    select(duree, speed, name, morphology_type, size_percent)
+  
+  finalintersections <- finalintersections %>%
+    bind_rows(intersections)
+  
+}
+```
+
+
+Visualization:
+```{r}
+finalintersections %>%
+  mutate(couverture = "oui") %>%
+  bind_rows(
+    finalintersections %>%
+      mutate(couverture = "non") %>%
+      mutate(size_percent = 1-size_percent)) %>%
+  mutate(duree = as.character(duree)) %>%
+  mutate(duree = if_else(duree == 5, "05", duree)) %>%
+  group_by(across(c(-name,-size_percent))) %>%
+  summarise(mean_size = mean(size_percent)) %>%
+  ggplot(mapping = aes(x = duree, y = mean_size, fill = couverture)) +
+  ggthemes::scale_fill_tableau() +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  theme(axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 8),
+        axis.title = element_text(size = 9),
+        title = element_text(size = 10), legend.position = 'bottom') +
+  ylab("Surface couverte: moyenne des fréquences") +
+  xlab("Temps d'accès en minutes") +
+  labs(caption = "Données : XXXX 2023
+       Vitesse de déplacement à pied comprise entre 3 et 5 km/h. Calculs de surfaces par enveloppe convexe") +
+  facet_grid(morphology_type~speed)
+
+ggsave(filename = "outputs/figure_11_accessibility_model_new_center.png", width = 40, height = 20, units = "cm", dpi = 400)
+```
+
+Same visualization but differencing cities:
+```{r}
+finalintersections %>%
+  mutate(couverture = "oui") %>%
+  bind_rows(
+    finalintersections %>%
+      mutate(couverture = "non") %>%
+      mutate(size_percent = 1-size_percent)) %>%
+  left_join(x = ., y = surfaces %>% 
+              filter(morphology_type == "tissu urbain continu") %>% 
+              select(name_insee), 
+            by = c("name" = "name_insee")) %>%
+  st_as_sf() %>%
+  mutate(reordering_by_size = as.numeric(st_area(.)/10000)) %>% # en ha
+  st_drop_geometry() %>%
+  mutate(duree = as.character(duree)) %>%
+  mutate(duree = if_else(duree == 5, "05", duree)) %>%
+  # uniquement le tissu urbain continu
+  filter(morphology_type == "tissu urbain continu") %>%
+  group_by(across(c(-morphology_type,-size_percent))) %>%
+  summarise(mean_size = mean(size_percent)) %>%
+  ggplot(mapping = aes(x = duree, y = mean_size, fill = couverture)) +
+  ggthemes::scale_fill_tableau() +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  theme(axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 8),
+        axis.title = element_text(size = 9),
+        title = element_text(size = 10),
+        strip.text.y = element_text(size = 6),
+        legend.position = 'bottom') +
+  ylab("Surface couverte") +
+  xlab("Temps d'accès en minutes") +
+  labs(caption = "Données : XXXX 2023
+       Vitesse de déplacement à pied comprise entre 3 et 5 km/h. Calculs de surfaces par enveloppe convexe") +
+  facet_grid(reorder(name, reordering_by_size)~speed)
+
+ggsave(filename = "outputs/figure_12_accessibility_model_new_center_cities.png", width = 40, height = 30, units = "cm", dpi = 400)
+```
+
+

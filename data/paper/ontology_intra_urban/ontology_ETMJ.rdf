@@ -1,0 +1,527 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="urn:absolute:jgravier/cities_north_france.owl"
+     xml:base="urn:absolute:jgravier/cities_north_france.owl"
+     xmlns:ns="http://creativecommons.org/ns#"
+     xmlns:org="http://www.w3.org/ns/org#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:time="http://www.w3.org/2006/time#"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:geofla="http://data.ign.fr/def/geofla#"
+     xmlns:dcterms="http://purl.org/dc/terms/">
+    <owl:Ontology rdf:about="urn:absolute:jgravier/cities_north_france.owl">
+        <dcterms:creator rdf:resource="http://orcid.org/0000-0003-0449-6499"/>
+        <dcterms:date xml:lang="en">2023-01-22</dcterms:date>
+        <dcterms:language>en</dcterms:language>
+        <dcterms:language>fr</dcterms:language>
+        <dcterms:license rdf:resource="https://creativecommons.org/licenses/by/4.0"/>
+        <dcterms:title xml:lang="fr">Ontologie de l&apos;accessibilité infra-urbaine des villes du nord de la France au début du XIXe s.</dcterms:title>
+        <dcterms:title xml:lang="en">Ontology of infra-urban accessibility of northern French cities in the early 19th century.</dcterms:title>
+        <owl:versionInfo xml:lang="en">Version 1.0.0</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/date -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/date"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/language -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/language"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/license -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/license"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.geonames.org/ontology#featureCode -->
+
+    <owl:ObjectProperty rdf:about="http://www.geonames.org/ontology#featureCode"/>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#aPourGeom -->
+
+    <owl:ObjectProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#aPourGeom">
+        <rdfs:label xml:lang="fr">a pour géométrie</rdfs:label>
+        <rdfs:label xml:lang="en">has geometry</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#estAccess -->
+
+    <owl:ObjectProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#estAccess">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Troncon"/>
+        <rdfs:range rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Centre"/>
+        <rdfs:range rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Pole"/>
+        <rdfs:label xml:lang="en">allows access</rdfs:label>
+        <rdfs:label xml:lang="fr">permet l&apos;accès</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#estIdentifieSur -->
+
+    <owl:ObjectProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#estIdentifieSur">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Troncon"/>
+        <rdfs:range rdf:resource="urn:absolute:jgravier/cities_north_france.owl#cartesETMJ"/>
+        <rdfs:label xml:lang="fr">est identifié sur</rdfs:label>
+        <rdfs:label xml:lang="en">is identified on</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#estIncluDans -->
+
+    <owl:ObjectProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#estIncluDans">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Pole"/>
+        <rdfs:range rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Centre"/>
+        <rdfs:label xml:lang="fr">est inclu dans</rdfs:label>
+        <rdfs:label xml:lang="en">is included in</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#estInfereAPartirDe -->
+
+    <owl:ObjectProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#estInfereAPartirDe">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Centre"/>
+        <rdfs:range rdf:resource="urn:absolute:jgravier/cities_north_france.owl#cartesETMJ"/>
+        <rdfs:label xml:lang="fr">est inféré à partir de</rdfs:label>
+        <rdfs:label xml:lang="en">is inferred from</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#estLie -->
+
+    <owl:ObjectProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#estLie">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Ville"/>
+        <rdfs:range rdf:resource="http://rdf.insee.fr/def/geo#Commune"/>
+        <rdfs:label xml:lang="fr">est lié à</rdfs:label>
+        <rdfs:label xml:lang="en">is linked to</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#estReconstitueAvec -->
+
+    <owl:ObjectProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#estReconstitueAvec">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Pole"/>
+        <rdfs:range rdf:resource="urn:absolute:jgravier/cities_north_france.owl#AutreSource"/>
+        <rdfs:label xml:lang="fr">est reconstitué à partir de</rdfs:label>
+        <rdfs:label xml:lang="en">is reconstituted from</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#estTresDense -->
+
+    <owl:ObjectProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#estTresDense">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Centre"/>
+        <rdfs:range rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Ville"/>
+        <rdfs:comment xml:lang="fr">Espace urbain délimité par l’enceinte urbaine – quand elle est encore en élévation au moment des levés de l’état-major – ou l’espace anciennement délimité par l’enceinte urbaine. Renvoie généralement aux zones représentées sous forme d’aplats rouges sur les planches de cartes de l’état-major, relatifs à des îlots denses.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Urban space delimited by the urban enclosure – when it is still in elevation – or the space formerly delimited by the urban enclosure. Generally refers to the areas represented in the form of solid red blocks on the maps, relating to dense blocks</rdfs:comment>
+        <rdfs:label xml:lang="en">dense city center</rdfs:label>
+        <rdfs:label xml:lang="fr">ville-centre dense</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#estUrbaniseContinu -->
+
+    <owl:ObjectProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#estUrbaniseContinu">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Centre"/>
+        <rdfs:range rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Ville"/>
+        <rdfs:comment xml:lang="fr">Morphologie de l&apos;espace urbain contenant la ville-centre et tissu d&apos;habitats continus sans interuptions (limite d&apos;environ 100 mètres)</rdfs:comment>
+        <rdfs:comment xml:lang="en">Morphology of the urban space containing the city-centre and continuous habitats without interruptions (limit ~ 100 meters)</rdfs:comment>
+        <rdfs:label xml:lang="fr">tissu urbain continu</rdfs:label>
+        <rdfs:label xml:lang="en">urban agglomeration</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://data.ign.fr/def/geofla#coordX -->
+
+    <owl:DatatypeProperty rdf:about="http://data.ign.fr/def/geofla#coordX">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#point"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://data.ign.fr/def/geofla#coordY -->
+
+    <owl:DatatypeProperty rdf:about="http://data.ign.fr/def/geofla#coordY">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#point"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://data.ign.fr/def/geofla#numInsee -->
+
+    <owl:DatatypeProperty rdf:about="http://data.ign.fr/def/geofla#numInsee">
+        <owl:equivalentProperty rdf:resource="urn:absolute:jgravier/cities_north_france.owl#insee"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://data.ign.fr/def/geofla#superficieHa -->
+
+    <owl:DatatypeProperty rdf:about="http://data.ign.fr/def/geofla#superficieHa">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Centre"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label xml:lang="en">area in ha</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#topDataProperty -->
+
+    <owl:DatatypeProperty rdf:about="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#insee -->
+
+    <owl:DatatypeProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#insee">
+        <rdfs:domain rdf:resource="http://rdf.insee.fr/def/geo#Commune"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#longueur -->
+
+    <owl:DatatypeProperty rdf:about="urn:absolute:jgravier/cities_north_france.owl#longueur">
+        <rdfs:domain rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Troncon"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:label xml:lang="en">length</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://rdf.insee.fr/def/geo#Commune -->
+
+    <owl:Class rdf:about="http://rdf.insee.fr/def/geo#Commune">
+        <rdfs:subClassOf rdf:resource="http://rdf.insee.fr/def/geo#Departement"/>
+        <rdfs:isDefinedBy rdf:resource="https://rdf.insee.fr/geo/index.html"/>
+        <rdfs:label xml:lang="fr">Commune</rdfs:label>
+        <rdfs:label xml:lang="en">Municipality</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://rdf.insee.fr/def/geo#Departement -->
+
+    <owl:Class rdf:about="http://rdf.insee.fr/def/geo#Departement">
+        <rdfs:isDefinedBy rdf:resource="https://rdf.insee.fr/geo/index.html"/>
+        <rdfs:label xml:lang="fr">Departement</rdfs:label>
+        <rdfs:label xml:lang="en">Department</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/sf#Line -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/sf#Line">
+        <owl:equivalentClass rdf:resource="urn:absolute:jgravier/cities_north_france.owl#polyligne"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/sf"/>
+        <rdfs:isDefinedBy xml:lang="en">Track graph</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/sf#MultiPolygon -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/sf#MultiPolygon">
+        <owl:equivalentClass rdf:resource="urn:absolute:jgravier/cities_north_france.owl#multipolygone"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/sf"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/sf#Point -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/sf#Point">
+        <owl:equivalentClass rdf:resource="urn:absolute:jgravier/cities_north_france.owl#point"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/sf"/>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#AutreSource -->
+
+    <owl:Class rdf:about="urn:absolute:jgravier/cities_north_france.owl#AutreSource">
+        <rdfs:comment xml:lang="fr">Autres sources d&apos;information : OSM, Google Map Satellite, cadastres napoléoniens (plans), livres d&apos;histoire locale, etc. Pour chaque ville, des spécifications nécessitant des clarifications sont données avec la bibliographie</rdfs:comment>
+        <rdfs:comment xml:lang="en">Other sources of information: OSM, Google Map Satellite, Napoléonian cadastres (maps), local history books, etc. For each city, specifications requiring clarification are given with the bibliography</rdfs:comment>
+        <rdfs:label xml:lang="fr">autres sources</rdfs:label>
+        <rdfs:label xml:lang="en">other sources</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#Centre -->
+
+    <owl:Class rdf:about="urn:absolute:jgravier/cities_north_france.owl#Centre">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="urn:absolute:jgravier/cities_north_france.owl#aPourGeom"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="urn:absolute:jgravier/cities_north_france.owl#multipolygone"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="urn:absolute:jgravier/cities_north_france.owl#Ville"/>
+        <rdfs:comment xml:lang="en">Delimited area of the urban space</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Zone délimitée de l&apos;espace urbain</rdfs:comment>
+        <rdfs:label xml:lang="en">Urban area</rdfs:label>
+        <rdfs:label xml:lang="fr">Zone urbaine</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#Pole -->
+
+    <owl:Class rdf:about="urn:absolute:jgravier/cities_north_france.owl#Pole">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="urn:absolute:jgravier/cities_north_france.owl#aPourGeom"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="urn:absolute:jgravier/cities_north_france.owl#point"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://rdf.insee.fr/def/geo#Commune"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+                <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.CH"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+                <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.CSTL"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+                <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.HSTS"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">Historical institutional pole materialized by an establishment in the urban space</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Pôle institutionnel historique matérialisé par un établissement dans l&apos;espace urbain</rdfs:comment>
+        <rdfs:label xml:lang="en">Historical urban center</rdfs:label>
+        <rdfs:label xml:lang="fr">Pôle urbain historique</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#Troncon -->
+
+    <owl:Class rdf:about="urn:absolute:jgravier/cities_north_france.owl#Troncon">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="urn:absolute:jgravier/cities_north_france.owl#aPourGeom"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="urn:absolute:jgravier/cities_north_france.owl#polyligne"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+                <owl:hasValue rdf:resource="http://www.geonames.org/ontology#R.RD"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+                <owl:hasValue rdf:resource="http://www.geonames.org/ontology#R.RDJCT"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">A section of road, street, or path as depicted on état-major maps that provides access to infra-urban spaces and the city with other settlements. Rivers which are navigable are not considered.</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Tronçon de route, de rue ou de chemin représenté sur les cartes d&apos;état-major permettant l&apos;accessibilité des espaces infra-urbains et de la ville avec d&apos;autres peuplements. Ne sont pas considérés les rivières navigables.</rdfs:comment>
+        <rdfs:label xml:lang="en">Section</rdfs:label>
+        <rdfs:label xml:lang="fr">Tronçon</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#Ville -->
+
+    <owl:Class rdf:about="urn:absolute:jgravier/cities_north_france.owl#Ville">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="urn:absolute:jgravier/cities_north_france.owl#aPourGeom"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="urn:absolute:jgravier/cities_north_france.owl#multipolygone"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://rdf.insee.fr/def/geo#Departement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+                <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.HSTS"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">&quot;Ville&quot; or &quot;Bourg&quot; according to the typography used on état-major maps to designate these settlements</rdfs:comment>
+        <rdfs:comment xml:lang="fr">&quot;Ville&quot; ou &quot;Bourg&quot; d&apos;après les casses typographiques utilisées sur les cartes d&apos;état-major pour désigner ces peuplements</rdfs:comment>
+        <rdfs:label xml:lang="en">City</rdfs:label>
+        <rdfs:label xml:lang="fr">Ville</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#cartesETMJ -->
+
+    <owl:Class rdf:about="urn:absolute:jgravier/cities_north_france.owl#cartesETMJ">
+        <rdfs:comment xml:lang="fr">IGN SCAN État-major® : cartes d’état-major au 1:40 000 sur la France métropolitaine</rdfs:comment>
+        <rdfs:comment xml:lang="en">IGN SCAN État-major®: 1:40,000-scale état-major maps of French territory</rdfs:comment>
+        <rdfs:label xml:lang="fr">cartes d&apos;état-major</rdfs:label>
+        <rdfs:label xml:lang="en">état-major maps</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#multipolygone -->
+
+    <owl:Class rdf:about="urn:absolute:jgravier/cities_north_france.owl#multipolygone">
+        <rdfs:label xml:lang="en">Multipolygon</rdfs:label>
+        <rdfs:label xml:lang="fr">Multipolygone</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#point -->
+
+    <owl:Class rdf:about="urn:absolute:jgravier/cities_north_france.owl#point">
+        <rdfs:label xml:lang="en">Point</rdfs:label>
+        <rdfs:label xml:lang="fr">Point</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- urn:absolute:jgravier/cities_north_france.owl#polyligne -->
+
+    <owl:Class rdf:about="urn:absolute:jgravier/cities_north_france.owl#polyligne">
+        <rdfs:label xml:lang="fr">Ligne</rdfs:label>
+        <rdfs:label xml:lang="en">Line</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.geonames.org/ontology#R.RD -->
+
+    <owl:NamedIndividual rdf:about="http://www.geonames.org/ontology#R.RD"/>
+    
+
+
+    <!-- http://www.geonames.org/ontology#R.RDJCT -->
+
+    <owl:NamedIndividual rdf:about="http://www.geonames.org/ontology#R.RDJCT"/>
+    
+
+
+    <!-- http://www.geonames.org/ontology#S.CH -->
+
+    <owl:NamedIndividual rdf:about="http://www.geonames.org/ontology#S.CH"/>
+    
+
+
+    <!-- http://www.geonames.org/ontology#S.CSTL -->
+
+    <owl:NamedIndividual rdf:about="http://www.geonames.org/ontology#S.CSTL"/>
+    
+
+
+    <!-- http://www.geonames.org/ontology#S.HSTS -->
+
+    <owl:NamedIndividual rdf:about="http://www.geonames.org/ontology#S.HSTS"/>
+    <rdf:Description>
+        <geofla:numInsee xml:lang="fr">contient le numéro insee de la commune centrale de la ville</geofla:numInsee>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
