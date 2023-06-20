@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 8, 2023</p>
+      <p class="date-modified">June 20, 2023</p>
     </div>
   </div>
     
@@ -346,7 +346,7 @@ loaded via a namespace (and not attached):
 </section>
 <section id="rotios-between-dendrograms-distances-and-distances-in-clusters" class="level4">
 <h4 class="anchored" data-anchor-id="rotios-between-dendrograms-distances-and-distances-in-clusters">1.3 Rotios between dendrograms distances and distances in clusters</h4>
-<p><em>WARNING: the choice of the number of cores for paralleled calculations</em></p>
+<p><span style="color:red;"> <em>WARNING: the choice of the number of cores for paralleled calculations</em> </span></p>
 <p>Calculation of distances between cities in diverse clusters:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## calculating pair distances and summarized results as function</span></span>
@@ -463,11 +463,11 @@ loaded via a namespace (and not attached):
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">'outputs/figure_2_map_138_cities.png'</span>, <span class="at">width =</span> <span class="dv">16</span>, <span class="at">height =</span> <span class="dv">14</span>, <span class="at">units =</span> <span class="st">'cm'</span>, <span class="at">dpi =</span> <span class="dv">600</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="relationship-between-population-size-and-areas-of-all-cities" class="level2">
-<h2 class="anchored" data-anchor-id="relationship-between-population-size-and-areas-of-all-cities">3. Relationship between population size and areas of all cities</h2>
+<section id="relationships-between-population-size-and-area-of-all-cities" class="level2">
+<h2 class="anchored" data-anchor-id="relationships-between-population-size-and-area-of-all-cities">3. Relationships between population size and area of all cities</h2>
 <section id="overview-of-relationships" class="level3">
 <h3 class="anchored" data-anchor-id="overview-of-relationships">3.1 Overview of relationships</h3>
-<p>Function for linear regression and summarized data:</p>
+<p>Function calculating linear regression and summarizing data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># linear regression on transform log10 data and summarizing</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>f_relationship <span class="ot">&lt;-</span> <span class="cf">function</span>(input_tibble){</span>
@@ -796,7 +796,7 @@ loaded via a namespace (and not attached):
 using the `.groups` argument.</code></pre>
 </div>
 </div>
-<p>Intersecting new polygons and spatial polygons of cities:</p>
+<p>Intersecting new polygons (convex hulls) and spatial polygons of cities:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>finalintersections <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">duree =</span> <span class="fu">numeric</span>(), <span class="at">speed =</span> <span class="fu">numeric</span>(), <span class="at">name =</span> <span class="fu">character</span>(),</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">morphology_type =</span> <span class="fu">character</span>(), <span class="at">size_percent =</span> <span class="fu">numeric</span>())</span>

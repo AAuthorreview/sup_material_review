@@ -3,7 +3,7 @@ title: "Supplementary material of XXXXXXXXXXX"
 format: html
 author: Anonymous
 date: 2023-05-17
-date-modified: 2023-06-08
+date-modified: 2023-06-20
 ---
 ## Project overview
 
@@ -156,7 +156,7 @@ ggsave(filename = 'outputs/figure_4_cluster_distance_matrix.png', width = 18, he
 
 #### 1.3 Rotios between dendrograms distances and distances in clusters
 
-_WARNING: the choice of the number of cores for paralleled calculations_
+ <span style="color:red;"> _WARNING: the choice of the number of cores for paralleled calculations_ </span>
 
 Calculation of distances between cities in diverse clusters:
 ```{r warning=FALSE, message=FALSE}
@@ -234,10 +234,10 @@ ggsave(filename = 'outputs/figure_2_map_138_cities.png', width = 16, height = 14
 ```
 
 
-## 3. Relationship between population size and areas of all cities
+## 3. Relationships between population size and area of all cities
 
 ### 3.1 Overview of relationships
-Function for linear regression and summarized data:
+Function calculating linear regression and summarizing data:
 ```{r}
 # linear regression on transform log10 data and summarizing
 f_relationship <- function(input_tibble){
@@ -540,7 +540,7 @@ sffinalconvexhull <- tableaufinal %>%
   st_convex_hull()
 ```
 
-Intersecting new polygons and spatial polygons of cities:
+Intersecting new polygons (convex hulls) and spatial polygons of cities:
 ```{r, warning=FALSE}
 finalintersections <- tibble(duree = numeric(), speed = numeric(), name = character(),
                              morphology_type = character(), size_percent = numeric())
